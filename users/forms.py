@@ -1,16 +1,10 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from users.models import Profile
 
 
-class UserForm(forms.ModelForm):
+class SingUp(UserCreationForm):
+    account_image = forms.ImageField(required=False)
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email',)
-
-
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ('ava', )
-        exclude = ('account',)
+        fields = ('username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'account_image')

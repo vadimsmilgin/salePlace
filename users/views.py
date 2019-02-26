@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.views.generic.base import View
 from django.http import HttpResponseRedirect
 from users.forms import *
+from users.models import Profile
 
 
 class LoginFormView(FormView):
@@ -31,18 +32,21 @@ class RegistrationFormView(FormView):
 
 
 def registrationUser(request):
-    user = UserCreationForm(request.POST)
-    user_from = UserForm(request.POST)
-    profile_form = ProfileForm(request.POST)
     if request.method == 'POST':
-        if user.is_valid() and user_from.is_valid() and profile_form.is_valid():
+        form = SingUp(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
             user.save()
-            user_from.save()
-            return redirect('login')
-    user = UserCreationForm()
-    user_from = UserForm()
-    profile_form = ProfileForm()
-    return render(request, 'reg.html', {'user': user, 'user_form': user_from, 'profile_form': profile_form})
+
+            profile = Profile()
+            profile.user = user
+            profile.ava = form.cleaned_data.get('account_image')
+            profile.save()
+            return HttpResponseRedirect("/users/login")
+    else:
+        form = SingUp()
+    return render(request, 'reg.html', {'form': form})
 
 
 class LogoutFormView(View):

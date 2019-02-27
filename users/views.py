@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.shortcuts import render
+from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic.edit import FormView
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout
 from django.views.generic.base import View
 from django.http import HttpResponseRedirect
 from users.forms import *
@@ -20,20 +20,9 @@ class LoginFormView(FormView):
         pass
 
 
-class RegistrationFormView(FormView):
-    form_class = UserCreationForm
-    template_name = "reg.html"
-    success_url = "login"
-
-    def form_valid(self, form):
-        form.save()
-        return super(RegistrationFormView, self).form_valid(form)
-        pass
-
-
-def registrationUser(request):
+def registration(request):
     if request.method == 'POST':
-        form = SingUp(request.POST)
+        form = SingUp(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
@@ -41,7 +30,7 @@ def registrationUser(request):
 
             profile = Profile()
             profile.user = user
-            profile.ava = form.cleaned_data.get('account_image')
+            profile.ava = request.FILES['account_image']
             profile.save()
             return HttpResponseRedirect("/users/login")
     else:

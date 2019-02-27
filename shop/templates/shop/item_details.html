@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}
+| {{item.name}}
+{% endblock %}
+{% block content%}
+
+
+<div class="card-deck" style="width: 30%">
+  <div class="card">
+    {% if item.icon.url %}
+        <img src="{% static item.icon.url %}" class="card-img-top" alt="{{item.name}}" width="300" height="200">
+    {% else %}
+        <img src="..." class="card-img-top" alt="...">
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{item.name}}</h5>
+     <p class="card-text">{{item.description}}</p>
+        <p class="card-text"><small class="text-muted">{{item.price}}</small></p>
+        <form action="{% url "cart:CartAdd" item.id %}" method="post">
+            {{ cart_product_form.quantity }}
+            {% csrf_token %}
+        <input type="submit" value="Добавить в корзину">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock%}
+

@@ -1,8 +1,10 @@
 from django.urls import path, re_path
-from users.views import LoginFormView, LogoutFormView, registration
+from users.views import *
 
 urlpatterns = [
     path('login', LoginFormView.as_view()),
     path('logout', LogoutFormView.as_view()),
     path('reg', registration),
+    re_path(r'^(?P<id>\d+)$', ProfileUser.as_view()),
 ]
+

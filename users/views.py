@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic import DetailView
 from django.views.generic.edit import FormView
 from django.contrib.auth import login, logout
 from django.views.generic.base import View
@@ -44,3 +45,12 @@ class LogoutFormView(View):
         logout(request)
         return HttpResponseRedirect("/")
         pass
+
+
+class ProfileUser(DetailView):
+
+    template_name = "profile.html"
+
+    def get(self, request, id):
+        user = get_object_or_404(User, id=id)
+        return render(request, self.template_name, {'current_user': user})

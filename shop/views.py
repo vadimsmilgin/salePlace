@@ -11,7 +11,6 @@ class ProductList(ListView):
 
     def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
-            context['categories'] = Category.objects.all()
             context['items'] = Item.objects.all()
             return context
             pass
@@ -41,3 +40,4 @@ class SingleCategory(ListView):
         return context
         pass
 
+#create fun to save new item

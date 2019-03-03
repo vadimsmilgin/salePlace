@@ -53,4 +53,6 @@ class ProfileUser(DetailView):
 
     def get(self, request, id):
         user = get_object_or_404(User, id=id)
-        return render(request, self.template_name, {'current_user': user})
+        profile = get_object_or_404(Profile, user=user)
+        #users = User.objects.all().select_related('profile')
+        return render(request, self.template_name, {'current_user': user, 'profile': profile})

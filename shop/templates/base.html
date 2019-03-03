@@ -12,13 +12,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-   <!-- <link href="{% static  'static/css/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen">
-    <script type="text/javascript" src="{% static 'static/js/bootstrap/bootstrap.min.js' %}">-->
+   <!-- <link href="{% static  'static/css/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen">-->
+    <script type="text/javascript" src="{% static 'static/js/profileValidate.js' %}"></script>
 </head>
 <body>
     <div class="container">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Главная</a>
+        <a class="navbar-brand" href="/">My Kufar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,7 +38,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
                         {% for cat in categories%}
                             <a class="dropdown-item" href="{{cat.get_absolute_url}}">{{cat.name}}</a>
-                        {%endfor%}
+                        {% endfor %}
                     </div>
                 </li>
             </ul>

@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_POST
 from django.views.generic import DetailView, ListView
 from shop.models import *
 #from cart.forms import CartAddProductForm
@@ -40,4 +41,5 @@ class SingleCategory(ListView):
         return context
         pass
 
-#create fun to save new item
+
+

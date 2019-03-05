@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -47,3 +48,17 @@ class Item(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'slug': self.slug})
         pass
+
+    def _get_unique_slug(self):
+        slug = slugify(self.name)
+        unique_slug = slug
+        num = 1
+        while Item.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        return unique_slug
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._get_unique_slug()
+        super().save(*args, **kwargs)

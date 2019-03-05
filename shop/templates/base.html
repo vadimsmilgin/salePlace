@@ -12,62 +12,64 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-   <!-- <link href="{% static  'static/css/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen">-->
+   <link href="{% static  'static/css/profile/styleProfile.css' %}" rel="stylesheet" type="text/css" media="screen">
     <script type="text/javascript" src="{% static 'static/js/profileValidate.js' %}"></script>
 </head>
 <body>
-    <div class="container">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">My Kufar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div class="container" style="background-color: #f8f9fa!important; height: 100vh;">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">My Kufar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-               <!-- <li class="nav-item active">
-                    <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                </li>-->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Категории</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        {% for cat in categories%}
-                            <a class="dropdown-item" href="{{cat.get_absolute_url}}">{{cat.name}}</a>
-                        {% endfor %}
-                    </div>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0" style="position: relative;left: 12em;">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav" style="position: relative;left: 13em;">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/users/{{user.id}}">Мой кабинет</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/users/logout">Выход</a>
-                        </li>
-                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/users/login">Войти</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/users/reg">Регистрация<span class="sr-only">(current)</span></a>
-                        </li>
-                    {% endif %}
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                   <!-- <li class="nav-item active">
+                        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                    </li>-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Категории</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            {% for cat in categories%}
+                                <a class="dropdown-item" href="{{cat.get_absolute_url}}">{{cat.name}}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
                 </ul>
+                <form class="form-inline my-2 my-lg-0" style="position: relative;left: 12em;">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav" style="position: relative;left: 13em;">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users/{{user.id}}">Мой кабинет</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users/logout">Выход</a>
+                            </li>
+                         {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users/login">Войти</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users/reg">Регистрация<span class="sr-only">(current)</span></a>
+                            </li>
+                        {% endif %}
+                    </ul>
+            </div>
+        </nav>
+        <div>
+            {% block content %} {% endblock %}
         </div>
-    </nav>
-    {% block content %} {% endblock %}
     </div>
 </body>
 </html>

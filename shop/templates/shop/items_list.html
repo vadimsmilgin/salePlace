@@ -5,21 +5,21 @@
 {% endblock %}
 
 {% block content%}
-<div class="row" xmlns="http://www.w3.org/1999/html">
-    <div class="col row1">
-        {% for item in items %}
-             <div class="card my-3 my" style="width: 25%;height: 40%;">
-                {% if not item.icon.url %}
-                    <img src="..." class="card-img-top" alt="..." style="width: 100%;height: 70%;">
-                {% else %}
-                    <img src="{{item.icon.url}}" class="card-img-top" alt="{{item.name}}" style="width:100%;height:70%;">
-                {% endif %}
-                    <div class="card-body">
-                        <a href="{{item.get_absolute_url}}">{{item.name}}</a>
+    <div class="row1">
+            {% for item in items %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        {% if not item.icon.url %}
+                            <img src="..." class="card-img-top" alt="..." >
+                        {% else %}
+                            <img src="{{item.icon.url}}" class="card-img-top" alt="{{item.name}}">
+                        {% endif %}
+                        <div class="card-body">
+                            <a href="{{item.get_absolute_url}}">{{item.name}}</a>
+                        </div>
                     </div>
-            </div>
-        {% endfor %}
+                </div>
+            {% endfor %}
     </div>
-</div>
 {% endblock %}
 

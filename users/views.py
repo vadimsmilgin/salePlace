@@ -5,6 +5,9 @@ from django.views.generic.edit import FormView
 from django.contrib.auth import login, logout
 from django.views.generic.base import View
 from django.http import HttpResponseRedirect
+
+from shop.forms import CreationItemForm
+from shop.models import Item
 from users.forms import *
 from users.models import Profile
 
@@ -52,7 +55,27 @@ class ProfileUser(DetailView):
     template_name = "profile.html"
 
     def get(self, request, id):
+        form = CreationItemForm()
         user = get_object_or_404(User, id=id)
         profile = get_object_or_404(Profile, user=user)
+        items = Item.objects.filter(owner=id)
         #users = User.objects.all().select_related('profile')
-        return render(request, self.template_name, {'current_user': user, 'profile': profile})
+        return render(request, self.template_name, {'current_user': user, 'profile': profile, 'form': form, 'items': items})
+
+    def post(self, request, *args, **kwargs):
+        form = CreationItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            id = kwargs['id']
+            cd = form.cleaned_data
+            user = get_object_or_404(User, id=id)
+            profile = get_object_or_404(Profile, user=user)
+
+            item = Item(owner=user,
+                        category=cd['category'],
+                        icon=cd['icon'],
+                        name=cd['name'],
+                        price=cd['price'],
+                        description=cd['description']).save()
+            self.get(request,id)
+        form = CreationItemForm()
+        return render(request, self.template_name, {'current_user': user, 'profile': profile, 'form': form})

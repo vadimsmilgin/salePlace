@@ -21,8 +21,8 @@ class SingleProduct(DetailView):
     template_name = "shop/item_details.html"
 
     def get(self, request, slug):
-        product = get_object_or_404(Item, slug=slug)
-        return render(request, self.template_name, {'item': product, 'cart_product_form': self.cart_product_form})
+        item = get_object_or_404(Item, slug=slug)
+        return render(request, self.template_name, {'item': item})
 
 
 class SingleCategory(ListView):

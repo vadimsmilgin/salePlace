@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  Ваша корзина товаров
+{% endblock %}
+
+{% block content %}
+  <h1>Ваша корзина товаров</h1>
+  <table class="table-cart" border="1px">
+    <thead>
+      <tr>
+        <th>Изображение</th>
+        <th>Продукт</th>
+        <th>Удалить</th>
+        <th>Цена</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in basket %}
+          <tr>
+            <td class="cart-img">
+              <a href="{{ item.item.get_absolute_url }}">
+                <img src="{% static item.item.icon.url %}" width="300px" height="200"/>
+              </a>
+            </td>
+            <td>{{ item.item.name }}</td>
+            <td><a href="{% url "basket:BasketRemove" item.item.id %}">Удалить</a></td>
+            <td class="num">{{ item.item.price }} руб.</td>
+          </tr>
+      {% endfor %}
+        <tr>
+            <td>Total</td>
+            <td colspan="2"></td>
+            <td class="num">{{total}}</td>
+        </tr>
+    </tbody>
+  </table>
+
+{% endblock %}

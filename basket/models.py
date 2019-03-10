@@ -5,6 +5,7 @@ from django.db import models
 from django.shortcuts import get_object_or_404
 
 from shop.models import Item
+from users.models import Profile
 
 
 class BasketUser(models.Model):
@@ -33,11 +34,23 @@ class BasketUser(models.Model):
     def remove(self, item, user):
         item = Item.objects.get(id=item.id)
         try:
-            del_item = BasketUser.objects.filter(owner=user, item=item)
-            del_item.delete()
+            self = BasketUser.objects.filter(owner=user, item=item)
+            self.delete()
         except BasketUser.DoesNotExist:
             pass
-       # for basket_item in BasketUser.objects.filter(owner=user, item=item):
-       #     if basket_item.item == item:
-        #        basket_item.delete()
-       #         self.save()
+
+    def pay(self, user):
+        totalSum = self.total_sum(user)
+        profile = get_object_or_404(Profile, user=user)
+        if totalSum > profile.account:
+            return False
+        else:
+            for basket_item in BasketUser.objects.filter(owner=user):
+                item_owner = basket_item.item.owner
+                profile_owner = get_object_or_404(Profile, user=item_owner)
+                profile_owner.account = profile_owner.account + basket_item.item.price
+                profile.account = profile.account - basket_item.item.price
+                profile_owner.save()
+                profile.save()
+                self.remove(basket_item.item, user)
+                return True

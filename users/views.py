@@ -29,7 +29,7 @@ def registration(request):
         form = SingUp(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False
+            #user.is_active = False
             user.save()
 
             profile = Profile()
@@ -76,6 +76,6 @@ class ProfileUser(DetailView):
                         name=cd['name'],
                         price=cd['price'],
                         description=cd['description']).save()
-            self.get(request,id)
+            self.get(request, id)
         form = CreationItemForm()
         return render(request, self.template_name, {'current_user': user, 'profile': profile, 'form': form})

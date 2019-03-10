@@ -17,10 +17,17 @@ def BasketAdd(request, item_id):
     return redirect('basket:BasketDetail')
 
 def BasketRemove(request, item_id):
-    print(1)
     item = Item.objects.get(id=item_id)
     BasketUser().remove(item, request.user)
     return redirect('basket:BasketDetail')
+
+def BasketPay(request):
+    correct = BasketUser().pay(request.user)
+    if correct:
+        return render(request, 'paid.html')
+    else:
+        error = 'Проверте счет. Не хватает средств.'
+        return render(request, 'paid.html', {'error': error})
 
 
 class Basket(ListView):
@@ -30,5 +37,7 @@ class Basket(ListView):
         basket = BasketUser.objects.filter(owner=request.user)
         total = BasketUser().total_sum(request.user)
         return render(request, 'basket.html', {'basket': basket, 'total': total})
+
+
 
 

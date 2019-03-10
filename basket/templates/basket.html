@@ -31,9 +31,15 @@
         <tr>
             <td>Total</td>
             <td colspan="2"></td>
-            <td class="num">{{total}}</td>
+            <td class="num">{{total}} руб.</td>
         </tr>
     </tbody>
   </table>
+
+    {% if total > 0 %}
+        <a class="btn btn-primary" href="{% url "basket:BasketPay" %}" role="button">Оплатить</a>
+    {% else %}
+        <a class="btn btn-primary btn-lg disabled" href="{% url "basket:BasketPay" %}" role="button">Оплатить</a>
+    {% endif %}
 
 {% endblock %}

@@ -18,21 +18,13 @@
 <body>
     <div class="container" style="background-color: #f8f9fa!important; height: 100vh;">
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-            <a class="navbar-brand" href="/">My Kufar</a>
+            <a class="navbar-brand" href="/" style="position: relative;bottom: 0.1em;">My Kufar</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
-                   <!-- <li class="nav-item active">
-                        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                    </li>-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Категории</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -42,30 +34,50 @@
                         </div>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0" style="position: relative;left: 12em;">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                {% if user.is_authenticated %}
+                    <form class="form-inline my-2 my-lg-0" style="position: relative;right: 6em;">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                {% else %}
+                    <form class="form-inline my-2 my-lg-0" style="position: relative;right: 13em;">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                {% endif%}
+                {% if user.is_authenticated %}
+                <div class="basket" style="position: relative;left: 7em;">
+                    {% if total_sum > 0 %}
+                        <a href="{% url "basket:BasketDetail" %}">Ваша корзина:{{total_sum}} руб.</a>
+                    {% else %}
+                         <p style="color: white;position: relative;top: 0.5em;">Корзина пуста</p>
+                    {%endif%}
+                </div>
+                {% endif %}
             </div>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav" style="position: relative;left: 13em;">
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/users/{{user.id}}">Мой кабинет</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/users/logout">Выход</a>
-                            </li>
-                         {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/users/login">Войти</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/users/reg">Регистрация<span class="sr-only">(current)</span></a>
-                            </li>
-                        {% endif %}
+            {% if user.is_authenticated %}
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav" style="position: relative;left: 8em;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users/{{user.id}}">Мой кабинет</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users/logout">Выход</a>
+                        </li>
                     </ul>
-            </div>
+                </div>
+             {% else %}
+                <div class="collapse navbar-collapse" id="navbarNav1">
+                    <ul class="navbar-nav" style="position: relative;left: 13em;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users/login">Войти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users/reg">Регистрация<span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
         </nav>
         <div>
             {% block content %} {% endblock %}

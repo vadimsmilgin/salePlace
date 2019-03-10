@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="text-center">
-    <form class="form-signin" method="post" role="form">
+    <form class="form-signin" method="post">
          {% csrf_token %}
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <div class="username">
@@ -23,6 +23,9 @@
         <div class="pass">
             {{ form.password }}
         </div>
+        {% for error in field.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
         <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me

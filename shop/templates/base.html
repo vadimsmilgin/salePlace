@@ -50,7 +50,7 @@
                     {% if total_sum > 0 %}
                         <a href="{% url "basket:BasketDetail" %}">Ваша корзина:{{total_sum}} руб.</a>
                     {% else %}
-                         <p style="color: white;position: relative;top: 0.5em;">Корзина пуста</p>
+                        <a href="{% url "basket:BasketDetail" %}" >Корзина пуста</a>
                     {%endif%}
                 </div>
                 {% endif %}

@@ -21,7 +21,7 @@ class Category(models.Model):
         pass
 
     def get_absolute_url(self):
-        return reverse('shop_category', kwargs={'slug': self.slug})
+        return reverse('shop:shop_category', kwargs={'slug': self.slug})
 
 
 class Item(models.Model):
@@ -46,7 +46,7 @@ class Item(models.Model):
         pass
 
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'slug': self.slug})
+        return reverse('shop:detail', kwargs={'slug': self.slug})
         pass
 
     def _get_unique_slug(self):
